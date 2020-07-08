@@ -40,7 +40,7 @@ fetchInfo2 () {
   render() {
     return(
       <div>
-        <h1>Find Your Flight //(I think this s/b main page) </h1>
+        <h1>Find Your Flight</h1>
         <SearchForm onSubmit={this.findflights}/>
         <Flights info={ this.state.info }/>
       </div>
@@ -84,7 +84,7 @@ class SearchForm extends Component {
 const Flights = (props) => {
   return (
     <div>
-      { props.info.map( (i) => <p>{i.id}---{i.date}---{i.from}---{i.to}---{i.flight_number}</p>) }
+      { props.info.map( (i) => <p>{i.id}---{i.date}---{i.from}---{i.to}--- {i.flight_number} </p>) }
       //(flight number needs link? to choose seat which is SeatMap.js form below)
     </div>
   );
