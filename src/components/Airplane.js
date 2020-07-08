@@ -13,19 +13,16 @@ class Airplane extends Component {
       info: []
     };
 
-  this.fetchInfo();
+  this.fetchInfo(SERVER_URL1);
 
   this.saveInfo = this.saveInfo.bind(this);
   this.fetchInfo = this.fetchInfo.bind(this);
 }
 
-findflights(from, to) {
-
-  console.log(from, to)
-}
-
-fetchInfo () {
-  axios.get(SERVER_URL1).then((results) => {
+fetchInfo (url) {
+  console.log(url);
+  axios.get(url).then((results) => {
+    console.log(results);
     this.setState({info: results.data});
     setTimeout(this.fetchInfo, 5000);
   });
@@ -41,7 +38,7 @@ fetchInfo () {
     return(
       <div>
         <p>====================Airplane.js====================</p>
-        <SearchForm onSubmit={this.findflights}/>
+        <SearchForm onSubmit={this.findFlights}/>
         <Flights info={ this.state.info }/>
       </div>
     );

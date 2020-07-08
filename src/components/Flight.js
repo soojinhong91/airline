@@ -5,6 +5,7 @@ import axios from 'axios';
 import _ from 'underscore';
 
 const SERVER_URL2 = 'http://localhost:3000/flights.json'
+const SERVER_BASE_URL = 'http://localhost:3000/'
 
 class Flight extends Component {
   constructor(){
@@ -13,23 +14,40 @@ class Flight extends Component {
       info: []
     };
 
-  this.fetchInfo2();
-
   this.saveInfo2 = this.saveInfo2.bind(this);
-  this.fetchInfo2 = this.fetchInfo2.bind(this);
+  this.fetchInfo = this.fetchInfo.bind(this);
+  this.findFlights = this.findFlights.bind(this);
 }
 
-findflights(from, to) {
-  // loop
-  console.log(from, to)
-}
-
-fetchInfo2 () {
-  axios.get(SERVER_URL2).then((results) => {
+fetchInfo (url) {
+  console.log(url);
+  axios.get(url).then((results) => {
+    console.log(results);
     this.setState({info: results.data});
-    setTimeout(this.fetchInfo2, 5000);
+    setTimeout(this.fetchInfo, 5000);
   });
 }
+
+findFlights(from, to) { /// getting the from/to params from the _handleSubmit function below 
+  console.log('You Clicked This');
+  const generateURL = function (p) {
+    return [
+      SERVER_BASE_URL,
+      'flights/',
+      from,
+      '/',
+      to
+      ].join('');
+    }
+  const url = generateURL()
+  console.log(url);
+  // this.fetchInfo(url)
+  axios.get(url).then((results) => {
+    this.setState({info: results.data});
+    setTimeout(this.fetchInfo, 5000);
+    console.log(results);
+  });
+  }
 
   saveInfo2(from, to) {
     axios.get(`${SERVER_URL2}/${from}/${to}`).then((result) => {
@@ -41,7 +59,7 @@ fetchInfo2 () {
     return(
       <div>
         <h1>Find Your Flight //(I think this s/b main page) </h1>
-        <SearchForm onSubmit={this.findflights}/>
+        <SearchForm onSubmit={this.findFlights}/>
         <Flights info={ this.state.info }/>
       </div>
     );
@@ -64,7 +82,7 @@ class SearchForm extends Component {
   }
   _handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.to, this.state.from);
+    this.props.onSubmit(this.state.from, this.state.to);
   }
 
   render() {
