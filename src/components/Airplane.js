@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import Flight from './Flight';
+import SeatMap from './SeatMap';
 import axios from 'axios';
+import _ from 'underscore';
 
-const SERVER_URL1 = 'http://localhost:3000/airplines.json'
-const SERVER_URL2 = 'http://localhost:3000/flights.json'
+const SERVER_URL1 = 'http://localhost:3000/airplanes.json'
 
 class Airplane extends Component {
   constructor(){
@@ -35,23 +37,10 @@ fetchInfo () {
     });
   }
 
-fetchInfo2 () {
-  axios.get(SERVER_URL1).then((results) => {
-    this.setState({info: results.data});
-    setTimeout(this.fetchInfo, 5000);
-  });
-}
-
-  saveInfo2(from, to) {
-    axios.get(`${SERVER_URL1}/${from}/${to}`).then((result) => {
-      this.setState({info: [...this.state.info, result.data]});
-    });
-  }
-
   render() {
     return(
       <div>
-        <h1>Find Your Flight</h1>
+        <p>====================Airplane.js====================</p>
         <SearchForm onSubmit={this.findflights}/>
         <Flights info={ this.state.info }/>
       </div>
@@ -95,9 +84,14 @@ class SearchForm extends Component {
 const Flights = (props) => {
   return (
     <div>
-      { props.info.map( (i) => <p>{i.id}:{i.from}:{i.to}</p>) }
+      { props.info.map( (i) => <p>{i.id}: Plane name: {i.name}, Rows: {i.rows} Columns: {i.columns}</p>) }
+
+
+
     </div>
   );
 };
+
+
 
 export default Airplane;
