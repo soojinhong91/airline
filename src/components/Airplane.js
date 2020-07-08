@@ -8,7 +8,7 @@ class Airplane extends Component {
     super();
     this.state = {
       info: []
-    };
+    }; 
 
 
   const fetchInfo = () => {
