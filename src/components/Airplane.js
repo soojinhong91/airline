@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-const SERVER_URL = 'http://localhost:3000/airplanes'
 
 class Airplane extends Component {
   constructor(){
     super();
     this.state = {
       info: []
-    }; 
+    };
 
 
   const fetchInfo = () => {
@@ -30,60 +29,9 @@ class Airplane extends Component {
 
   render() {
     return(
-      <div>
-        <h1>Find Your Flight</h1>
-        <SearchForm onSubmit={this.fetchInfo}/>
-        {/*<Flights />*/}
-      </div>
+      <h1>Airplane coming soon</h1>
     );
-  }
-}}
-
-
-
-class SearchForm extends Component {
-
-  constructor(){
-    super();
-    this.state = {from: '', to: ''}
-    this._handleInputTo = this._handleInputTo.bind(this);
-    this._handleInputFrom = this._handleInputFrom.bind(this);
-    this._handleSubmit = this._handleSubmit.bind(this);
-  }
-
-
-  _handleInputFrom(event){
-    this.setState({from:event.target.value})
-  }
-
-
-  _handleInputTo(event) {
-    this.setState({to:event.target.value})
-  }
-
-  _handleSubmit(event) {
-    event.preventDefault();
-    this.props.onSubmit(this.state.to, this.state.from);
-  }
-
-
-  render() {
-    return(
-      <div>
-      <p>Please search for a flight</p>
-        <form onSubmit={this._handleSubmit}>
-          From: <input type="text" placeholder="JFK" required onInput={this._handleInputFrom}/>
-          To: <input type="text" placeholder="SFO" required onInput={this._handleInputTo}/>
-          <input type="submit"/>
-        </form>
-      </div>
-    )
   }
 }
 
-{/*const Flights = () => {
-  return
-    <div> Goodbye
-    </div>
-}*/}
 export default Airplane;
