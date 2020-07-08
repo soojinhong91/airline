@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Flight from './Flight';
-import Search from './Search';
+import axios from 'axios';
+
 
 class Airplane extends Component {
   render() {
