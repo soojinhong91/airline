@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Airplane from './Airplane';
+
 import Flight from './Flight';
 import axios from 'axios';
 import _ from 'underscore';
@@ -23,16 +23,6 @@ class SeatMap extends Component {
         'A4','B4','C4', 'D4',
         'A5','B5','C5', 'D5'
       ],
-      // seat: [
-      //   'A1','A2','A3', 'A4','A5','A6',
-      //   'B1','B2','B3', 'B4','B5','B6',
-      //   'C1','C2','C3', 'C4','C5', 'C6'
-      // ],
-      // seatAvailable: [
-      //   'A1','A2','A3', 'A4','A5','A6',
-      //   'B1','B2','B3', 'B4','B5','B6',
-      //   'C1','C2','C3', 'C4','C5', 'C6'
-      // ],
       seatReserved: []
     }
   }
@@ -63,6 +53,7 @@ class SeatMap extends Component {
     )
   }
 }
+
 class DrawGrid extends Component {
   render() {
     return (
@@ -80,8 +71,8 @@ class DrawGrid extends Component {
             )}
           </tbody>
         </table>
-        <AvailableList available = { this.props.available } />
-        <ReservedList reserved = { this.props.reserved } />
+        <td><AvailableList available = { this.props.available } /></td>
+        <td><ReservedList reserved = { this.props.reserved } /></td>
        </div>
     )
   }
@@ -115,26 +106,3 @@ class ReservedList extends Component {
   }
 }
 export default SeatMap;
-
-//   render() {
-//     return(
-//       <div>
-//         <p>====================SeatMap.js====================</p>
-//         <p>Flight info: will create component later </p>
-//         <p><SeatPlan /></p>
-//       </div>
-//     )
-//   }
-// }
-//
-//
-// const SeatPlan = (props) => {
-//   return (
-//     <div>
-//       <h2>Seating Plan</h2>
-//       <Airplane />
-//     </div>
-//   );
-// };
-//
-// export default SeatMap;

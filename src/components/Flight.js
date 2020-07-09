@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Airplane from './Airplane';
+
 import SeatMap from './SeatMap';
 import axios from 'axios';
 import _ from 'underscore';
@@ -28,7 +28,7 @@ fetchInfo (url) {
   });
 }
 
-findFlights(from, to) { /// getting the from/to params from the _handleSubmit function below 
+findFlights(from, to) { /// getting the from/to params from the _handleSubmit function below
   console.log('You Clicked This');
   const generateURL = function (p) {
     return [
@@ -58,13 +58,8 @@ findFlights(from, to) { /// getting the from/to params from the _handleSubmit fu
   render() {
     return(
       <div>
-<<<<<<< HEAD
         <h1>Find Your Flight</h1>
-        <SearchForm onSubmit={this.findflights}/>
-=======
-        <h1>Find Your Flight //(I think this s/b main page) </h1>
         <SearchForm onSubmit={this.findFlights}/>
->>>>>>> 3d02e6d793f2315feb7682540a2202eb90e83d67
         <Flights info={ this.state.info }/>
       </div>
     );
@@ -104,13 +99,20 @@ class SearchForm extends Component {
   }
 }
 
-const Flights = (props) => {
+const Flights = (props) => { // change to component
   return (
     <div>
-      { props.info.map( (i) => <p>{i.id}---{i.date}---{i.from}---{i.to}--- {i.flight_number} </p>) }
-      //(flight number needs link? to choose seat which is SeatMap.js form below)
+      { props.info.map( (i) =>
+        <div>
+          <p>{i.id}---{i.date}---{i.from}---{i.to}--- {i.flight_number} </p>
+
+        </div>) }
+       <SeatMap />
     </div>
   );
 };
+
+// add onClick event to call SeatMap
+// connect flight to the SeatMap
 
 export default Flight;
