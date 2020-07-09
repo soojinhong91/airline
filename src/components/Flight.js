@@ -4,20 +4,34 @@ import SeatMap from './SeatMap';
 import axios from 'axios';
 import _ from 'underscore';
 
+const SERVER_URL1 = 'http://localhost:3000/airplanes.json'
 const SERVER_URL2 = 'http://localhost:3000/flights.json'
 const SERVER_BASE_URL = 'http://localhost:3000/'
+
 
 class Flight extends Component {
   constructor(){
     super();
     this.state = {
-      info: []
+      info: [],
+      planes: [],
     };
+
+    const fetchPlanes = () => {
+      axios.get(SERVER_URL1).then((results) => {
+        console.log(results);
+        this.setState({planes: results.data});
+      });
+    }
 
   this.saveInfo2 = this.saveInfo2.bind(this);
   this.fetchInfo = this.fetchInfo.bind(this);
   this.findFlights = this.findFlights.bind(this);
+
+
+  fetchPlanes();
 }
+
 
 fetchInfo (url) {
   console.log(url);
@@ -27,6 +41,7 @@ fetchInfo (url) {
     setTimeout(this.fetchInfo, 5000);
   });
 }
+
 
 findFlights(from, to) { /// getting the from/to params from the _handleSubmit function below
   console.log('You Clicked This');
@@ -56,11 +71,12 @@ findFlights(from, to) { /// getting the from/to params from the _handleSubmit fu
   }
 
   render() {
+    console.log(this.state.info)
     return(
       <div>
         <h1>Find Your Flight</h1>
         <SearchForm onSubmit={this.findFlights}/>
-        <Flights info={ this.state.info }/>
+        <Flights flights={ this.state.info } planes={ this.state.planes }/>
       </div>
     );
   }
@@ -99,20 +115,46 @@ class SearchForm extends Component {
   }
 }
 
-const Flights = (props) => { // change to component
-  return (
-    <div>
-      { props.info.map( (i) =>
-        <div>
-          <p>{i.id}---{i.date}---{i.from}---{i.to}--- {i.flight_number} </p>
+// class CallFlights extends Component {
+//   render() {
+//     return(
+//       <Flights />
+//     );
+//   }
+// }
 
-        </div>) }
-       <SeatMap />
-    </div>
-  );
-};
+class Flights extends Component {
+  constructor() {
+    super();
+    this.state = {rows:'', columns:'', flight:{}, plane:{}}
+  }
 
-// add onClick event to call SeatMap
-// connect flight to the SeatMap
+  //updatinng Component (previous)
+  componentDidUpdate(prevProps, prevState){
+    console.log({prevState})
+    if (prevState.flight.id !== this.state.flight.id) {
+      const found = this.props.planes.find((p) => p.name == this.state.flight.plane_type )
+      console.log({found})
+      this.setState({plane:found})
+    }
+  }
+
+  render() {
+    const props = this.props;
+    console.log(props)
+    return(
+      <div>
+        { props.flights.map( (i) =>
+          <div>
+            <p>{i.id}---{i.date}---{i.from}---{i.to}--- {i.flight_number} </p>
+            <button onClick={() => this.setState({flight:i})}>click</button>
+          </div>) }
+         <SeatMap plane={this.state.plane} />
+      </div>
+    );
+  }
+}
+
+
 
 export default Flight;
